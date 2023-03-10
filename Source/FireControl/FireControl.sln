@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireControl", "FireControl.csproj", "{563C6152-4A6D-432C-8151-0A91D55D9A54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		1.3|Any CPU = 1.3|Any CPU
+		1.4|Any CPU = 1.4|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{563C6152-4A6D-432C-8151-0A91D55D9A54}.1.3|Any CPU.ActiveCfg = 1.3|Any CPU
+		{563C6152-4A6D-432C-8151-0A91D55D9A54}.1.3|Any CPU.Build.0 = 1.3|Any CPU
+		{563C6152-4A6D-432C-8151-0A91D55D9A54}.1.4|Any CPU.ActiveCfg = 1.4|Any CPU
+		{563C6152-4A6D-432C-8151-0A91D55D9A54}.1.4|Any CPU.Build.0 = 1.4|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {075502A7-C17C-4025-A56D-0D4B5E1ABCDA}
+	EndGlobalSection
+EndGlobal
