@@ -19,32 +19,42 @@
         </building>
         <hasInteractionCell>true</hasInteractionCell>
         <comps>
-            <li Class="CompProperties_Forbiddable"/>
+            <li Class="CompProperties_Forbiddable" />
         </comps>
     </ThingDef>
     <ThingDef ParentName="FC_ComputerBase">
         <defName>FC_FireControl_Basic</defName>
         <label>basic fire control computer</label>
-        <description>The simple control panel is designed to operate a few weapon emplacements and is similar to a
-            drone's control panel. It consists of a compact console with a handful of buttons, switches, and a
-            joystick. The console is connected to the weapon emplacements via a secure wireless network.
-            
-            The joystick is used to aim the weapons and adjust their position. The operator can control the tilt
-            and rotation of each weapon emplacement by moving the joystick in different directions. The buttons
-            and switches on the console are used to activate the weapons and adjust their firing mode.
-            
-            The console also features a small screen that displays important data, such as the weapon's status,
-            ammunition count, and target information. This information is updated in real-time, allowing the
+        <description>The simple control panel is designed to operate a few weapon emplacements and
+            is similar to a
+            drone's control panel. It consists of a compact console with a handful of buttons,
+            switches, and a
+            joystick. The console is connected to the weapon emplacements via a secure wireless
+            network.
+
+            The joystick is used to aim the weapons and adjust their position. The operator can
+            control the tilt
+            and rotation of each weapon emplacement by moving the joystick in different directions.
+            The buttons
+            and switches on the console are used to activate the weapons and adjust their firing
+            mode.
+
+            The console also features a small screen that displays important data, such as the
+            weapon's status,
+            ammunition count, and target information. This information is updated in real-time,
+            allowing the
             operator to make quick decisions and adjust their strategy as needed.
-            
-            Overall, the simple control panel is a reliable and efficient way for an operator to control a few
-            weapon emplacements. Its compact size and intuitive design make it easy to use, while its advanced
+
+            Overall, the simple control panel is a reliable and efficient way for an operator to
+            control a few
+            weapon emplacements. Its compact size and intuitive design make it easy to use, while
+            its advanced
             features allow for precise control and strategic decision-making.</description>
-        <size>(5, 2)</size>
+        <size>(3, 1)</size>
         <graphicData>
             <graphicClass>Graphic_Multi</graphicClass>
             <texPath>Buildings/Industrial/TCS_Industrial</texPath>
-            <drawSize>(5, 6)</drawSize>
+            <drawSize>(3, 3)</drawSize>
         </graphicData>
         <costStuffCount>150</costStuffCount>
         <stuffCategories>
@@ -60,22 +70,23 @@
         <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
         <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
         <uiIconPath>Buildings/Industrial/TCS_Industrial_Full_south</uiIconPath>
-        <interactionCellOffset>(0, 0, 2)</interactionCellOffset>
+        <interactionCellOffset>(0, 0, 1)</interactionCellOffset>
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>100</basePowerConsumption>
+                <basePowerConsumption>500</basePowerConsumption>
+                <idlePowerDraw>0</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>false</auto>
                 <efficiency>0</efficiency>
-                <maxTurrets>4</maxTurrets>
+                <maxTurrets>3</maxTurrets>
             </li>
             <li Class="FireControl.CompProperties_ActiveGraphic">
                 <graphicData>
                     <graphicClass>Graphic_Multi</graphicClass>
                     <texPath>Buildings/Industrial/TCS_Industrial_Top</texPath>
-                    <drawSize>(5, 6)</drawSize>
+                    <drawSize>(3, 3)</drawSize>
                 </graphicData>
             </li>
         </comps>
@@ -83,27 +94,36 @@
     <ThingDef ParentName="FC_ComputerBase">
         <defName>FC_FireControl_Advanced</defName>
         <label>advanced fire control computer</label>
-        <description>The advanced control panel designed for weapon emplacements has been revolutionized with an
-            innovative control mechanism: a bowl of goo. The goo is a smart material that can sense and respond
-            to the operator's touch, allowing for a highly intuitive and flexible control experience.
-            
+        <description>The advanced control panel designed for weapon emplacements has been
+            revolutionized with an
+            innovative control mechanism: a bowl of goo. The goo is a smart material that can sense
+            and respond
+            to the operator's touch, allowing for a highly intuitive and flexible control
+            experience.
+
             The bowl of goo is connected to a holographic display that provides a three-dimensional
-            representation of the weapon emplacements and surrounding area. The operator can touch and
-            manipulate the goo to control the position and aim of the weapons. For example, by pushing the goo
+            representation of the weapon emplacements and surrounding area. The operator can touch
+            and
+            manipulate the goo to control the position and aim of the weapons. For example, by
+            pushing the goo
             forward, the operator can adjust the aim of the weapon emplacement to a new location.
-            
-            The goo is designed with advanced haptic feedback, providing the operator with a realistic sense of
-            touch and texture. This allows the operator to feel the resistance of the weapon emplacements as
+
+            The goo is designed with advanced haptic feedback, providing the operator with a
+            realistic sense of
+            touch and texture. This allows the operator to feel the resistance of the weapon
+            emplacements as
             they adjust their position, giving them greater control and precision.
-            
-            The holographic display also includes a set of advanced features, such as predictive modeling and
-            real-time data analysis. These features enable the operator to make quick and informed decisions
+
+            The holographic display also includes a set of advanced features, such as predictive
+            modeling and
+            real-time data analysis. These features enable the operator to make quick and informed
+            decisions
             based on the situation on the ground.</description>
-        <size>(5, 2)</size>
+        <size>(5, 3)</size>
         <graphicData>
             <graphicClass>Graphic_Multi</graphicClass>
             <texPath>Buildings/Spacer/TCS_Spacer</texPath>
-            <drawSize>(6, 5.5)</drawSize>
+            <drawSize>(5, 5)</drawSize>
         </graphicData>
         <costList>
             <Steel>400</Steel>
@@ -122,7 +142,8 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>500</basePowerConsumption>
+                <basePowerConsumption>2500</basePowerConsumption>
+                <idlePowerDraw>0</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>false</auto>
@@ -133,7 +154,7 @@
                 <graphicData>
                     <graphicClass>Graphic_Multi</graphicClass>
                     <texPath>Buildings/Spacer/TCS_Spacer_Top</texPath>
-                    <drawSize>(6, 5.5)</drawSize>
+                    <drawSize>(5, 5)</drawSize>
                 </graphicData>
             </li>
         </comps>
@@ -141,8 +162,10 @@
     <ThingDef ParentName="FC_ComputerBase">
         <defName>FC_FireControl_Ultra</defName>
         <label>ultratech fire control computer</label>
-        <description>The tower's control room is a marvel of engineering, featuring a holographic display that provides
-            operators with a panoramic view of the surrounding area. The tower's operator can analyze this data
+        <description>The tower's control room is a marvel of engineering, featuring a holographic
+            display that provides
+            operators with a panoramic view of the surrounding area. The tower's operator can
+            analyze this data
             and use it to guide weapon emplacements with remarkable accuracy.</description>
         <size>(5, 5)</size>
         <graphicData>
@@ -167,12 +190,13 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>1000</basePowerConsumption>
+                <basePowerConsumption>10000</basePowerConsumption>
+                <idlePowerDraw>0</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>false</auto>
-                <efficiency>0.4</efficiency>
-                <maxTurrets>12</maxTurrets>
+                <efficiency>0.6</efficiency>
+                <maxTurrets>15</maxTurrets>
             </li>
             <li Class="FireControl.CompProperties_ActiveGraphic">
                 <graphicData>
@@ -186,20 +210,23 @@
     <ThingDef ParentName="FC_ComputerBase">
         <defName>FC_FireControl_Archo</defName>
         <label>archotech fire control computer</label>
-        <description>Archotech autonomous weapon control platform is based on a set of principles and technologies
-            that we cannot comprehend. It may use quantum computing, AI algorithms, and nanotechnology that are
-            beyond our current understanding. The platform may also be capable of instant communication across
+        <description>Archotech autonomous weapon control platform is based on a set of principles
+            and technologies
+            that we cannot comprehend. It may use quantum computing, AI algorithms, and
+            nanotechnology that are
+            beyond our current understanding. The platform may also be capable of instant
+            communication across
             vast distances or even dimensions.</description>
-        <size>(4, 4)</size>
+        <size>(8, 8)</size>
         <rotatable>false</rotatable>
         <graphicData>
             <graphicClass>Graphic_Single</graphicClass>
             <texPath>Buildings/TCS_Archo</texPath>
-            <drawSize>(8, 8)</drawSize>
+            <drawSize>(16, 16)</drawSize>
         </graphicData>
         <statBases>
-            <Mass>10</Mass>
-            <MarketValue>10000</MarketValue>
+            <Mass>1000</Mass>
+            <MarketValue>100000</MarketValue>
         </statBases>
         <costList>
             <Plasteel>500</Plasteel>
@@ -214,32 +241,42 @@
         <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
         <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
         <hasInteractionCell>false</hasInteractionCell>
+        <thingSetMakerTags>
+            <li>RewardStandardCore</li>
+        </thingSetMakerTags>
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>10000</basePowerConsumption>
+                <basePowerConsumption>25000</basePowerConsumption>
+                <idlePowerDraw>0</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>true</auto>
                 <efficiency>0.8</efficiency>
-                <maxTurrets>12</maxTurrets>
+                <maxTurrets>25</maxTurrets>
             </li>
         </comps>
     </ThingDef>
     <ThingDef ParentName="FC_ComputerBase" MayRequire="explodoboy.snsambitioncosmic">
         <defName>FC_FireControl_Cosmic</defName>
         <label>cosmic fire control computer</label>
-        <description>The remote control tower designed with Cosmic alloy is an unparalleled feat of technological
-            advancement. This revolutionary material imbues the tower with extreme durability, heat resistance,
-            and advanced electromagnetic capabilities. The tower's sleek, metallic exterior is smooth to the
+        <description>The remote control tower designed with Cosmic alloy is an unparalleled feat of
+            technological
+            advancement. This revolutionary material imbues the tower with extreme durability, heat
+            resistance,
+            and advanced electromagnetic capabilities. The tower's sleek, metallic exterior is
+            smooth to the
             touch and its unique alloy composition is a closely guarded secret.
-            
+
             The tower's advanced capabilities allow it to remotely control weapon emplacements with
-            unprecedented precision and speed. The tower is fully autonomous, capable of detecting threats and
-            activating defense mechanisms without any human intervention. Its sophisticated sensors and
-            computing systems can analyze and process vast amounts of data in real-time, allowing for quick and
+            unprecedented precision and speed. The tower is fully autonomous, capable of detecting
+            threats and
+            activating defense mechanisms without any human intervention. Its sophisticated sensors
+            and
+            computing systems can analyze and process vast amounts of data in real-time, allowing
+            for quick and
             accurate responses.</description>
-        <size>(7, 7)</size>
+        <size>(8, 8)</size>
         <rotatable>false</rotatable>
         <hasInteractionCell>false</hasInteractionCell>
         <graphicData>
@@ -262,7 +299,8 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>5000</basePowerConsumption>
+                <basePowerConsumption>50000</basePowerConsumption>
+                <idlePowerDraw>0</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>true</auto>

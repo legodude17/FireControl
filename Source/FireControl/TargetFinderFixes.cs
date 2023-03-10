@@ -37,6 +37,13 @@ public static class TargetFinderFixes
             new HarmonyMethod(typeof(TargetFinderFixes), nameof(HasRangedAttack_Prefix)));
         harm.Patch(AccessTools.Method(typeof(AttackTargetFinder), nameof(AttackTargetFinder.CanSee)),
             new HarmonyMethod(typeof(TargetFinderFixes), nameof(CanSee_Prefix)));
+        if (AccessTools.TypeByName("CombatExtended.HarmonyCE.Harmony_AttackTargetFinder") is { } outer)
+            if (AccessTools.Inner(outer, "Harmony_AttackTargetFinder_BestAttackTarget") is { } inner)
+                if (AccessTools.Method(inner, "FindAttackTargetForRangedAttack") is { } target)
+                {
+                    Log.Message("[FireControl] Patching Combat Extended...");
+                    harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixSearcherThingPosition)));
+                }
     }
 
     public static void TargSearcher_Postfix(Building_TurretGun __instance, IAttackTargetSearcher __result)
@@ -91,7 +98,7 @@ public static class TargetFinderFixes
             if (i > 2 && codes[i - 1].operand is FieldInfo { Name: "searcherThing" } && codes[i].Calls(info1))
                 yield return CodeInstruction.Call(typeof(TargetFinderFixes), nameof(GetRealSearcher), new[] { typeof(Thing) });
 
-            if (i > 2 && codes[i - 1].operand is FieldInfo { Name: "searcher" } && codes[i].Calls(info2))
+            if (codes[i].Calls(info2))
                 yield return CodeInstruction.Call(typeof(TargetFinderFixes), nameof(GetRealSearcher), new[] { typeof(IAttackTargetSearcher) });
 
             yield return codes[i];
