@@ -37,13 +37,14 @@ public static class TargetFinderFixes
             new HarmonyMethod(typeof(TargetFinderFixes), nameof(HasRangedAttack_Prefix)));
         harm.Patch(AccessTools.Method(typeof(AttackTargetFinder), nameof(AttackTargetFinder.CanSee)),
             new HarmonyMethod(typeof(TargetFinderFixes), nameof(CanSee_Prefix)));
-        if (AccessTools.TypeByName("CombatExtended.HarmonyCE.Harmony_AttackTargetFinder") is { } outer)
-            if (AccessTools.Inner(outer, "Harmony_AttackTargetFinder_BestAttackTarget") is { } inner)
-                if (AccessTools.Method(inner, "FindAttackTargetForRangedAttack") is { } target)
-                {
-                    Log.Message("[FireControl] Patching Combat Extended...");
-                    harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixSearcherThingPosition)));
-                }
+        if (AccessTools.TypeByName("CombatExtended.HarmonyCE.Harmony_AttackTargetFinder") is { } outer
+         && AccessTools.Inner(outer, "Harmony_AttackTargetFinder_BestAttackTarget") is { } inner
+         && AccessTools.Method(inner, "FindAttackTargetForRangedAttack") is { } target)
+        {
+            Log.Message("[FireControl] Patching Combat Extended...");
+            harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixSearcherThingPosition)));
+            harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixManningCheck)));
+        }
     }
 
     public static void TargSearcher_Postfix(Building_TurretGun __instance, IAttackTargetSearcher __result)
@@ -104,4 +105,16 @@ public static class TargetFinderFixes
             yield return codes[i];
         }
     }
+
+    public static IEnumerable<CodeInstruction> FixManningCheck(IEnumerable<CodeInstruction> instructions)
+    {
+        var codes = instructions.ToList();
+        var info1 = AccessTools.PropertyGetter(typeof(Pawn), nameof(Pawn.CurJobDef));
+        var idx1 = codes.FindIndex(ins => ins.Calls(info1));
+        codes.RemoveRange(idx1, 3);
+        codes.Insert(idx1, CodeInstruction.Call(typeof(TargetFinderFixes), nameof(IsManning)));
+        return codes;
+    }
+
+    private static bool IsManning(Pawn pawn) => pawn.CurJobDef == JobDefOf.ManTurret || pawn.CurJobDef == FC_DefOf.FC_ManComputer;
 }
