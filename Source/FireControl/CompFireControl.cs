@@ -76,11 +76,23 @@ public class CompFireControl : ThingComp, ITargetingSource
         }
 
         if (turret.TryGetComp<CompAutoMannable>() is { FireController: { } controller })
-            if (!add && controller != this)
+            if (add)
             {
-                if (showMessages) Messages.Message("FireControl.MustBeMine".Translate(), MessageTypeDefOf.RejectInput, false);
+                if (controller == this)
+                {
+                    if (showMessages) Messages.Message("FireControl.AlreadyConnected".Translate(), MessageTypeDefOf.RejectInput, false);
 
-                return false;
+                    return false;
+                }
+            }
+            else
+            {
+                if (controller != this)
+                {
+                    if (showMessages) Messages.Message("FireControl.MustBeMine".Translate(), MessageTypeDefOf.RejectInput, false);
+
+                    return false;
+                }
             }
 
         return true;

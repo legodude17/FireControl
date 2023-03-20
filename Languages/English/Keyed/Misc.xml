@@ -17,7 +17,7 @@
     <FireControl.Disconnect>Disconnect Turret</FireControl.Disconnect>
     <FireControl.Disconnect.Desc>Choose a turret to disconnect from this fire control computer.</FireControl.Disconnect.Desc>
     <FireControl.NoTurrets>No turrets</FireControl.NoTurrets>
-    <FireControl.AlreadyConnected>Turret is already connected to a fire control computer</FireControl.AlreadyConnected>
+    <FireControl.AlreadyConnected>Turret is already connected to this fire control computer</FireControl.AlreadyConnected>
     <FireControl.MustBeMine>Turret must be connected to this fire control computer</FireControl.MustBeMine>
     <FireControl.Controllable>Controllable?</FireControl.Controllable>
     <FireControl.Controllable.Desc>If true, turret will be controllable by fire control computers</FireControl.Controllable.Desc>
