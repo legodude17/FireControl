@@ -11,6 +11,7 @@ namespace FireControl;
 public static class TargetFinderFixes
 {
     private static readonly Dictionary<Thing, Thing> realSearchers = new();
+    private static AccessTools.FieldRef<List<IAttackTarget>> validTargets;
 
     public static void Do(Harmony harm)
     {
@@ -38,13 +39,20 @@ public static class TargetFinderFixes
         harm.Patch(AccessTools.Method(typeof(AttackTargetFinder), nameof(AttackTargetFinder.CanSee)),
             new HarmonyMethod(typeof(TargetFinderFixes), nameof(CanSee_Prefix)));
         if (AccessTools.TypeByName("CombatExtended.HarmonyCE.Harmony_AttackTargetFinder") is { } outer
-         && AccessTools.Inner(outer, "Harmony_AttackTargetFinder_BestAttackTarget") is { } inner
-         && AccessTools.Method(inner, "FindAttackTargetForRangedAttack") is { } target)
+         && AccessTools.Inner(outer, "Harmony_AttackTargetFinder_BestAttackTarget") is { } inner)
         {
-            Log.Message("[FireControl] Patching Combat Extended...");
-            harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixSearcherThingPosition)));
-            harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixManningCheck)));
+            if (AccessTools.Method(inner, "FindAttackTargetForRangedAttack") is { } target)
+            {
+                Log.Message("[FireControl] Patching Combat Extended...");
+                harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixSearcherThingPosition)));
+                harm.Patch(target, transpiler: new HarmonyMethod(typeof(TargetFinderFixes), nameof(FixManningCheck)));
+            }
+
+            if (AccessTools.Field(inner, "validTargets") is { } field) validTargets = AccessTools.StaticFieldRefAccess<List<IAttackTarget>>(field);
         }
+
+        if (AccessTools.TypeByName("CombatExtended.Building_TurretGunCE") is { } type && AccessTools.Method(type, "TargSearcher") is { } targ)
+            harm.Patch(targ, postfix: new HarmonyMethod(typeof(TargetFinderFixes), nameof(TargSearcher_Postfix)));
     }
 
     public static void TargSearcher_Postfix(Building_TurretGun __instance, IAttackTargetSearcher __result)

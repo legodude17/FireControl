@@ -23,6 +23,7 @@ public static class HarmonyPatches
         Harm.Patch(AccessTools.Method(typeof(ShotReport), nameof(ShotReport.HitFactorFromShooter), new[] { typeof(Thing), typeof(float) }),
             transpiler: Get(nameof(AddAccuracyCalc)));
         TargetFinderFixes.Do(Harm);
+//        DebugPatches.Do(Harm);
     }
 
     public static HarmonyMethod Get(string name) => new(typeof(HarmonyPatches), name);

@@ -45,6 +45,7 @@
     <Compile Include="CompActiveGraphic.cs" />
     <Compile Include="CompAutoMannable.cs" />
     <Compile Include="CompFireControl.cs" />
+    <Compile Include="DebugPatches.cs" />
     <Compile Include="FC_DefOf.cs" />
     <Compile Include="FireControlMod.cs" />
     <Compile Include="HarmonyPatches.cs" />
