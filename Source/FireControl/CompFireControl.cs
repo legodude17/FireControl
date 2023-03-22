@@ -24,7 +24,7 @@ public class CompFireControl : ThingComp, ITargetingSource
 
     private int lastTickUsed;
     public CompProperties_FireControl Props => props as CompProperties_FireControl;
-    public int CurrentLoad => compMannables.Sum(comp => (comp.props as CompProperties_AutoMannable)!.complexity);
+    public int CurrentLoad => compMannables.Take(LimitIndex + 1).Sum(comp => (comp.props as CompProperties_AutoMannable)!.complexity);
     public bool Usable => compPower == null || compPower.PowerOn;
 
     public int MaxLoad =>
@@ -268,11 +268,15 @@ public class CompFireControl : ThingComp, ITargetingSource
         if (!Usable) yield break;
         if (Props.auto) yield break;
 
-        yield return new FloatMenuOption("OrderManThing".Translate(parent.LabelShort, parent), delegate
-        {
-            var job = JobMaker.MakeJob(FC_DefOf.FC_ManComputer, parent);
-            selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-        });
+        if (selPawn.WorkTagIsDisabled(WorkTags.Violent))
+            yield return new FloatMenuOption("CannotManThing".Translate(parent.LabelShort, parent) +
+                                             " (" + "IsIncapableOfViolenceLower".Translate(selPawn.LabelShort, selPawn) + ")", null);
+        else
+            yield return new FloatMenuOption("OrderManThing".Translate(parent.LabelShort, parent), delegate
+            {
+                var job = JobMaker.MakeJob(FC_DefOf.FC_ManComputer, parent);
+                selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+            });
     }
 
     public void Notify_TurretLost(Building_Turret turret)

@@ -51,6 +51,12 @@
             its advanced
             features allow for precise control and strategic decision-making.</description>
         <size>(3, 1)</size>
+        <statBases>
+            <MaxHitPoints>500</MaxHitPoints>
+            <WorkToBuild>2000</WorkToBuild>
+            <Flammability>0</Flammability>
+            <Mass>50</Mass>
+        </statBases>
         <graphicData>
             <graphicClass>Graphic_Multi</graphicClass>
             <texPath>Buildings/Industrial/TCS_Industrial</texPath>
@@ -74,8 +80,8 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>500</basePowerConsumption>
-                <idlePowerDraw>0</idlePowerDraw>
+                <basePowerConsumption>250</basePowerConsumption>
+                <idlePowerDraw>50</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>false</auto>
@@ -120,6 +126,12 @@
             decisions
             based on the situation on the ground.</description>
         <size>(5, 3)</size>
+        <statBases>
+            <MaxHitPoints>1000</MaxHitPoints>
+            <WorkToBuild>4000</WorkToBuild>
+            <Flammability>0</Flammability>
+            <Mass>100</Mass>
+        </statBases>
         <graphicData>
             <graphicClass>Graphic_Multi</graphicClass>
             <texPath>Buildings/Spacer/TCS_Spacer</texPath>
@@ -142,8 +154,8 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>2500</basePowerConsumption>
-                <idlePowerDraw>0</idlePowerDraw>
+                <basePowerConsumption>500</basePowerConsumption>
+                <idlePowerDraw>100</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>false</auto>
@@ -168,6 +180,12 @@
             analyze this data
             and use it to guide weapon emplacements with remarkable accuracy.</description>
         <size>(5, 5)</size>
+        <statBases>
+            <MaxHitPoints>2000</MaxHitPoints>
+            <WorkToBuild>8000</WorkToBuild>
+            <Flammability>0</Flammability>
+            <Mass>500</Mass>
+        </statBases>
         <graphicData>
             <graphicClass>Graphic_Multi</graphicClass>
             <texPath>Buildings/Ultra/TCS_Ultra</texPath>
@@ -190,8 +208,8 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>10000</basePowerConsumption>
-                <idlePowerDraw>0</idlePowerDraw>
+                <basePowerConsumption>1000</basePowerConsumption>
+                <idlePowerDraw>200</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>false</auto>
@@ -247,8 +265,8 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>25000</basePowerConsumption>
-                <idlePowerDraw>0</idlePowerDraw>
+                <basePowerConsumption>2500</basePowerConsumption>
+                <idlePowerDraw>1000</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>true</auto>
@@ -277,6 +295,12 @@
             for quick and
             accurate responses.</description>
         <size>(8, 8)</size>
+        <statBases>
+            <MaxHitPoints>2000</MaxHitPoints>
+            <WorkToBuild>8000</WorkToBuild>
+            <Flammability>0</Flammability>
+            <Mass>500</Mass>
+        </statBases>
         <rotatable>false</rotatable>
         <hasInteractionCell>false</hasInteractionCell>
         <graphicData>
@@ -299,8 +323,8 @@
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>50000</basePowerConsumption>
-                <idlePowerDraw>0</idlePowerDraw>
+                <basePowerConsumption>5000</basePowerConsumption>
+                <idlePowerDraw>2500</idlePowerDraw>
             </li>
             <li Class="FireControl.CompProperties_FireControl">
                 <auto>true</auto>

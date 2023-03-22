@@ -22,6 +22,8 @@ public static class HarmonyPatches
         Harm.Patch(AccessTools.Method(typeof(Building_TurretGun), nameof(Building_TurretGun.BurstCooldownTime)), postfix: Get(nameof(ModifyCooldown)));
         Harm.Patch(AccessTools.Method(typeof(ShotReport), nameof(ShotReport.HitFactorFromShooter), new[] { typeof(Thing), typeof(float) }),
             transpiler: Get(nameof(AddAccuracyCalc)));
+        if (AccessTools.TypeByName("CombatExtended.Building_TurretGunCE") is { } type && AccessTools.Method(type, "BurstCooldownTime") is { } target)
+            Harm.Patch(target, postfix: Get(nameof(ModifyCooldown)));
         TargetFinderFixes.Do(Harm);
 //        DebugPatches.Do(Harm);
     }
