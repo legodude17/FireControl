@@ -22,8 +22,15 @@ public static class HarmonyPatches
         Harm.Patch(AccessTools.Method(typeof(Building_TurretGun), nameof(Building_TurretGun.BurstCooldownTime)), postfix: Get(nameof(ModifyCooldown)));
         Harm.Patch(AccessTools.Method(typeof(ShotReport), nameof(ShotReport.HitFactorFromShooter), new[] { typeof(Thing), typeof(float) }),
             transpiler: Get(nameof(AddAccuracyCalc)));
-        if (AccessTools.TypeByName("CombatExtended.Building_TurretGunCE") is { } type && AccessTools.Method(type, "BurstCooldownTime") is { } target)
-            Harm.Patch(target, postfix: Get(nameof(ModifyCooldown)));
+        Harm.Patch(AccessTools.Method(typeof(Building_TurretGun), nameof(Building_TurretGun.SpawnSetup)), postfix: Get(nameof(CheckManning)));
+        Harm.Patch(AccessTools.Method(typeof(Building), nameof(Building.SetFaction)), postfix: Get(nameof(CheckManning)));
+        Harm.Patch(AccessTools.Method(typeof(Thing), nameof(Thing.SetFactionDirect)), postfix: Get(nameof(CheckManning)));
+        if (AccessTools.TypeByName("CombatExtended.Building_TurretGunCE") is { } type)
+        {
+            if (AccessTools.Method(type, "BurstCooldownTime") is { } target1) Harm.Patch(target1, postfix: Get(nameof(ModifyCooldown)));
+            if (AccessTools.Method(type, "SpawnSetup") is { } target2) Harm.Patch(target2, postfix: Get(nameof(CheckManning)));
+        }
+
         TargetFinderFixes.Do(Harm);
 //        DebugPatches.Do(Harm);
     }
@@ -39,7 +46,7 @@ public static class HarmonyPatches
 
     public static void ModifyCooldown(Building_TurretGun __instance, ref float __result)
     {
-        __result /= __instance.TryGetComp<CompAutoMannable>().FireController.Efficiency;
+        __result /= __instance.TryGetComp<CompAutoMannable>()?.FireController?.Efficiency ?? 1f;
     }
 
     public static IEnumerable<CodeInstruction> AddAccuracyCalc(IEnumerable<CodeInstruction> instructions)
@@ -60,6 +67,15 @@ public static class HarmonyPatches
     {
         if (thing.TryGetComp<CompAutoMannable>() is { FireController.Efficiency: var efficiency }) return accuracy * efficiency;
         return accuracy;
+    }
+
+    public static void CheckManning(Thing __instance)
+    {
+        if (__instance is Building_TurretGun turret)
+        {
+            if (!turret.Faction.IsPlayerSafe() && turret.mannableComp is CompAutoMannable) turret.mannableComp = null;
+            if (turret.Faction.IsPlayerSafe() && turret.mannableComp == null && turret.GetComp<CompAutoMannable>() is { } comp) turret.mannableComp = comp;
+        }
     }
 #if v1_4
     public static IEnumerable<CodeInstruction> FixPowerDisplay(IEnumerable<CodeInstruction> instructions)
