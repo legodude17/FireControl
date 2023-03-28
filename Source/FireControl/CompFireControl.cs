@@ -13,6 +13,7 @@ public class CompFireControl : ThingComp, ITargetingSource, INamed
 {
     private static readonly Texture2D ConnectTurretTex = ContentFinder<Texture2D>.Get("UI/TurretConnect");
     private static readonly Texture2D DisconnectTurretTex = ContentFinder<Texture2D>.Get("UI/TurretDisconnect");
+    private static readonly Texture2D DisconnectAllTex = ContentFinder<Texture2D>.Get("UI/TurretDisconnectAll");
 
     public int LimitIndex;
     public Pawn ManningPawn;
@@ -266,6 +267,24 @@ public class CompFireControl : ThingComp, ITargetingSource, INamed
         if (controlledTurrets.Count == 0) disconnect.Disable("FireControl.NoTurrets".Translate());
 
         yield return disconnect;
+
+        var disconnectAll = new Command_Action
+        {
+            defaultLabel = "FireControl.DisconnectAll".Translate(),
+            defaultDesc = "FireControl.DisconnectAll.Desc".Translate(),
+            icon = DisconnectAllTex,
+            action = delegate
+            {
+                foreach (var turret in controlledTurrets) turret.TryGetComp<CompAutoMannable>()?.Notify_RemoveControl();
+
+                controlledTurrets.Clear();
+                compMannables.Clear();
+            }
+        };
+
+        if (controlledTurrets.Count == 0) disconnectAll.Disable("FireControl.NoTurrets".Translate());
+
+        yield return disconnectAll;
 
         yield return new Command_Action
         {
