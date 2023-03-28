@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using HarmonyLib;
@@ -11,6 +12,8 @@ namespace FireControl;
 public static class HarmonyPatches
 {
     public static Harmony Harm;
+    private static readonly Type turretGunCE;
+    private static readonly AccessTools.FieldRef<object, CompMannable> compMannableCE;
 
     static HarmonyPatches()
     {
@@ -27,8 +30,10 @@ public static class HarmonyPatches
         Harm.Patch(AccessTools.Method(typeof(Thing), nameof(Thing.SetFactionDirect)), postfix: Get(nameof(CheckManning)));
         if (AccessTools.TypeByName("CombatExtended.Building_TurretGunCE") is { } type)
         {
+            turretGunCE = type;
             if (AccessTools.Method(type, "BurstCooldownTime") is { } target1) Harm.Patch(target1, postfix: Get(nameof(ModifyCooldown)));
             if (AccessTools.Method(type, "SpawnSetup") is { } target2) Harm.Patch(target2, postfix: Get(nameof(CheckManning)));
+            compMannableCE = AccessTools.FieldRefAccess<CompMannable>(type, "mannableComp");
         }
 
         TargetFinderFixes.Do(Harm);
@@ -75,6 +80,12 @@ public static class HarmonyPatches
         {
             if (!turret.Faction.IsPlayerSafe() && turret.mannableComp is CompAutoMannable) turret.mannableComp = null;
             if (turret.Faction.IsPlayerSafe() && turret.mannableComp == null && turret.GetComp<CompAutoMannable>() is { } comp) turret.mannableComp = comp;
+        }
+        else if (turretGunCE.IsInstanceOfType(__instance))
+        {
+            if (!__instance.Faction.IsPlayerSafe() && compMannableCE(__instance) is CompAutoMannable) compMannableCE(__instance) = null;
+            if (__instance.Faction.IsPlayerSafe() && compMannableCE(__instance) == null && __instance.TryGetComp<CompAutoMannable>() is { } comp)
+                compMannableCE(__instance) = comp;
         }
     }
 #if v1_4
