@@ -40,9 +40,10 @@ public class CompFireControl : ThingComp, ITargetingSource, INamed
     public int TurretCount => controlledTurrets.Count;
 
     public float Efficiency =>
-        Props.auto || ManningPawn == null || CurrentLoad == 0
-            ? Props.efficiency
-            : Props.efficiency + Mathf.Max(ManningPawn.skills.GetSkill(SkillDefOf.Shooting).Level * 10 / Mathf.Log(CurrentLoad + 1) / 100f, 0.01f);
+        Mathf.Clamp(Props.auto || ManningPawn == null || CurrentLoad == 0
+                ? Props.efficiency
+                : Props.efficiency + ManningPawn.skills.GetSkill(SkillDefOf.Shooting).Level * 10 / Mathf.Log(CurrentLoad + 1) / 100f,
+            0.01f, FireControlMod.MaxEfficiency);
 
     public string Name { get; set; }
 

@@ -27,4 +27,5 @@
     <FireControl.Restart.Desc>Your settings changes require a game restart to take effect. Sorry for the inconvenience.</FireControl.Restart.Desc>
     <FireControl.DisconnectAll>Disconnect All</FireControl.DisconnectAll>
     <FireControl.DisconnectAll.Desc>Disconnect all turrets connected to this fire control computer.</FireControl.DisconnectAll.Desc>
+    <FireControl.MaxEfficiency>Maximum efficiency: {0}</FireControl.MaxEfficiency>
 </LanguageData>

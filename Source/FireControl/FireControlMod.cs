@@ -9,6 +9,7 @@ namespace FireControl;
 
 public class FireControlMod : Mod
 {
+    private static FireControlMod instance;
     private readonly Dictionary<string, int> entryIndices = new();
     private readonly HashSet<string> hasEntry = new();
     private readonly string name;
@@ -17,18 +18,20 @@ public class FireControlMod : Mod
     private string[] buffers;
     private List<FireControlSettings.Entry> oldEntries;
     private Vector2 scrollPos;
-
     private FireControlSettings settings;
 
     public FireControlMod(ModContentPack content) : base(content)
     {
         name = content.Name;
+        instance = this;
         LongEventHandler.ExecuteWhenFinished(delegate
         {
             LoadSettings();
             AutoPatch();
         });
     }
+
+    public static float MaxEfficiency => instance.settings.maxEfficiency;
 
     private FireControlSettings.Entry EntryFor(string name) =>
         entryIndices.ContainsKey(name) ? settings.entries[entryIndices[name]] : new FireControlSettings.Entry(name);
@@ -49,6 +52,8 @@ public class FireControlMod : Mod
     public override void DoSettingsWindowContents(Rect inRect)
     {
         base.DoSettingsWindowContents(inRect);
+        Widgets.HorizontalSlider(inRect.TakeTopPart(50f), ref settings.maxEfficiency, new FloatRange(0.1f, 5f),
+            "FireControl.MaxEfficiency".Translate(settings.maxEfficiency.ToStringPercent()));
         var viewRect = new Rect(0, 0, inRect.width - 20f, present.Count * (25 * 3 + 10));
         Widgets.BeginScrollView(inRect, ref scrollPos, viewRect);
         for (var i = 0; i < settings.entries.Count; i++)
@@ -138,11 +143,13 @@ public class FireControlMod : Mod
 public class FireControlSettings : ModSettings
 {
     public List<Entry> entries = new();
+    public float maxEfficiency = 5f;
 
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_Collections.Look(ref entries, "entries", LookMode.Deep);
+        Scribe_Collections.Look(ref entries, nameof(entries), LookMode.Deep);
+        Scribe_Values.Look(ref maxEfficiency, nameof(maxEfficiency), 5f);
     }
 
     public struct Entry : IExposable
