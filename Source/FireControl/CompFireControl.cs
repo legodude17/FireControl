@@ -243,6 +243,7 @@ public class CompFireControl : ThingComp, ITargetingSource, INamed
             defaultLabel = "FireControl.Connect".Translate(),
             defaultDesc = "FireControl.Connect.Desc".Translate(),
             icon = ConnectTurretTex,
+            hotKey = KeyBindingDefOf.Misc4,
             action = delegate
             {
                 add = true;
@@ -257,6 +258,7 @@ public class CompFireControl : ThingComp, ITargetingSource, INamed
             defaultLabel = "FireControl.Disconnect".Translate(),
             defaultDesc = "FireControl.Disconnect.Desc".Translate(),
             icon = DisconnectTurretTex,
+            hotKey = KeyBindingDefOf.Misc5,
             action = delegate
             {
                 add = false;
