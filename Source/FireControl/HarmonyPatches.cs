@@ -81,7 +81,7 @@ public static class HarmonyPatches
             if (!turret.Faction.IsPlayerSafe() && turret.mannableComp is CompAutoMannable) turret.mannableComp = null;
             if (turret.Faction.IsPlayerSafe() && turret.mannableComp == null && turret.GetComp<CompAutoMannable>() is { } comp) turret.mannableComp = comp;
         }
-        else if (turretGunCE.IsInstanceOfType(__instance))
+        else if (turretGunCE != null && compMannableCE != null && turretGunCE.IsInstanceOfType(__instance))
         {
             if (!__instance.Faction.IsPlayerSafe() && compMannableCE(__instance) is CompAutoMannable) compMannableCE(__instance) = null;
             if (__instance.Faction.IsPlayerSafe() && compMannableCE(__instance) == null && __instance.TryGetComp<CompAutoMannable>() is { } comp)

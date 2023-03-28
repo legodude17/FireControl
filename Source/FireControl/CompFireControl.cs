@@ -9,7 +9,7 @@ using Verse.AI;
 namespace FireControl;
 
 [StaticConstructorOnStartup]
-public class CompFireControl : ThingComp, ITargetingSource
+public class CompFireControl : ThingComp, ITargetingSource, INamed
 {
     private static readonly Texture2D ConnectTurretTex = ContentFinder<Texture2D>.Get("UI/TurretConnect");
     private static readonly Texture2D DisconnectTurretTex = ContentFinder<Texture2D>.Get("UI/TurretDisconnect");
@@ -42,6 +42,8 @@ public class CompFireControl : ThingComp, ITargetingSource
         Props.auto || ManningPawn == null || CurrentLoad == 0
             ? Props.efficiency
             : Props.efficiency + Mathf.Max(ManningPawn.skills.GetSkill(SkillDefOf.Shooting).Level * 10 / Mathf.Log(CurrentLoad + 1) / 100f, 0.01f);
+
+    public string Name { get; set; }
 
     public bool CanHitTarget(LocalTargetInfo target) => target.HasThing;
 
@@ -176,6 +178,9 @@ public class CompFireControl : ThingComp, ITargetingSource
         base.PostExposeData();
         Scribe_Collections.Look(ref controlledTurrets, nameof(controlledTurrets), LookMode.Reference);
         if (Scribe.mode == LoadSaveMode.PostLoadInit) compMannables = controlledTurrets.Select(t => t.TryGetComp<CompMannable>()).ToList();
+        var name = Name;
+        Scribe_Values.Look(ref name, nameof(name));
+        Name = name;
     }
 
     public void Used(Pawn user)
@@ -261,7 +266,22 @@ public class CompFireControl : ThingComp, ITargetingSource
         if (controlledTurrets.Count == 0) disconnect.Disable("FireControl.NoTurrets".Translate());
 
         yield return disconnect;
+
+        yield return new Command_Action
+        {
+            icon = TexButton.Rename,
+            defaultLabel = "CommandRenameZoneLabel".Translate(),
+            action = delegate
+            {
+                var dialog = new Dialog_RenameSomething(this);
+                if (KeyBindingDefOf.Misc1.IsDown) dialog.WasOpenedByHotkey();
+                Find.WindowStack.Add(dialog);
+            },
+            hotKey = KeyBindingDefOf.Misc1
+        };
     }
+
+    public override string TransformLabel(string label) => Name.NullOrEmpty() ? base.TransformLabel(label) : Name;
 
     public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
     {
