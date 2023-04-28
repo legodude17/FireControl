@@ -13,7 +13,7 @@ public class JobDriver_ManComputer : JobDriver
     public override IEnumerable<Toil> MakeNewToils()
     {
         this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
-        AddEndCondition(() => FireControl.Active ? JobCondition.Ongoing : JobCondition.Incompletable);
+        AddEndCondition(() => FireControl.Usable ? JobCondition.Ongoing : JobCondition.Incompletable);
         yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
         var toil = new Toil
         {
